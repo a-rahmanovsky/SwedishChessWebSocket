@@ -271,7 +271,7 @@ class Game:
                 print('in curr_fig')
                 print(nextBoard.l_moved)
                 nextBoard.l_moved[curr_col + str(start_y)] = True
-            print('after if', currBoard.l_moved, nextBoard.l_moved)
+
             if nextBoard.check(curr_col):
                 del nextBoard
                 return '?'
@@ -282,13 +282,14 @@ class Game:
             tempD = {'w': 'b', 'b': 'w'}
             endD = {'w' : 7, 'b' : 0}
                 
-            if temp_fig == 'l' and end_y in [0, 7] and (not nextBoard.l_moved[tempD[curr_col] + str(end_y)]) and end_x == endD[curr_col]:
+            if temp_fig == 'l' and end_y in [0, 7] and (not nextBoard.l_moved[tempD[curr_col] + str(start_y)]) and end_x == endD[curr_col]:
                 nextBoard.l_moved[tempD[curr_col] + str(start_y)] = True
-            self.Boards[index].turn = tempD[curr_col]
-            self.Boards[index].display()
+            self.Boards[index].turn = tempD[curr_col
             print('pawn_wire', curr_fig, end_x, endD[curr_col])
             if curr_fig == 'p' and end_x == endD[curr_col]:
                 return '+'
+            
+            self.Boards[index].display()
             
             return temp_fig
         return '!'
@@ -327,6 +328,25 @@ class Game:
             self.Boards[index].display()
             return figure
         return '!'
+
+
+    def replace_pawn(self, index, position, asg_figure, color):
+        Asgar = {'R': 'l',
+                 'N': 'k',
+                 'B': 's',
+                 'Q': 'f',
+                 'P': 'p'}
+
+        currBoard = self.Boards[index]
+        x, y = (int(position[1]) - 1, ord(position[0]) - ord('a'))
+        place = self.Boards[index][x][y]
+        if place.figure != 'p' or place.color != color:
+            return '!'
+        figure = Asgar[asg_figure]
+        self.Boards[index][x][y] = Cell(figure, color)
+
+        self.Boards[index].display()
+        return figure
 
     def possible_placements(self, index, figure, color):
         currBoard = self.Boards[index]

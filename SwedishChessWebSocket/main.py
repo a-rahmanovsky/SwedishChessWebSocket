@@ -106,7 +106,7 @@ class Server:
                 login_send = self.slots[new_index]
                 await self.sent_by_login(login_send, json.dumps({'type': 'add_piece', 'piece': figure}))
             if figure == '+':
-                await self.sent_by_login(login, json.dumps({'type': 'pawn_wire'}))
+                await self.sent_by_login(login, json.dumps({'type': 'pawn_wire', 'position': end}))
             if figure not in '+!?':
                 m_js['login'] = login
                 m_js['turn'] = 'white'

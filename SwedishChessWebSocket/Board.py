@@ -282,9 +282,9 @@ class Game:
             tempD = {'w': 'b', 'b': 'w'}
             endD = {'w' : 7, 'b' : 0}
                 
-            if temp_fig == 'l' and end_y in [0, 7] and (not nextBoard.l_moved[tempD[curr_col] + str(start_y)]) and end_x == endD[curr_col]:
+            if temp_fig == 'l' and end_y in [0, 7] and (not nextBoard.l_moved[tempD[curr_col] + str(end_y)]) and end_x == endD[curr_col]:
                 nextBoard.l_moved[tempD[curr_col] + str(start_y)] = True
-            self.Boards[index].turn = tempD[curr_col
+            self.Boards[index].turn = tempD[curr_col]
             self.Boards[index].display()
             print('pawn_wire', curr_fig, end_x, endD[curr_col])
             if curr_fig == 'p' and end_x == endD[curr_col]:

@@ -62,6 +62,8 @@ class Server:
                 await self.step(m_js, login)
             if m_js['type'] == 'new_piece':
                 await self.new_piece(m_js, login)
+            if m_js['type'] == 'choose_piece':
+                await self.change_pawn(m_js, login)
 
     async def choose_slot(self, m_js, login):
         slot = int(m_js['slot'])
@@ -106,7 +108,7 @@ class Server:
                 login_send = self.slots[new_index]
                 await self.sent_by_login(login_send, json.dumps({'type': 'add_piece', 'piece': figure}))
             if figure == '+':
-                await self.sent_by_login(login, json.dumps({'type': 'pawn_wire', 'position': end}))
+                await self.sent_by_login(login, json.dumps({'type': 'pawn_wire', 'from': m_js['from'], 'to': m_js['to']}))
             if figure not in '+!?':
                 m_js['login'] = login
                 m_js['turn'] = 'white'
@@ -135,6 +137,24 @@ class Server:
             await self.sent_to_clients(json.dumps(m_js))
         else:
             await self.sent_by_login(login, json.dumps({'type': 'invalid_step'}))
+
+    async def change_pawn(self, m_js, login):
+        end = m_js['to']['h'] + str(m_js['to']['v'])
+        index = self.slots.index(login)
+        num_board = 0 if index == 0 or index == 2 else 1
+        turn = 'white'
+        if self.game.get_color(num_board) == 'b':
+            turn = 'black'
+        response = json.dumps({'type': 'step_pawn_wire',
+                               'login': login,
+                               'pawn': m_js['from'],
+                               'new_piece_position': m_js['to'],
+                               'turn': turn,
+                               'piece_type': m_js['piece']
+                               })
+        print(f'recw: {m_js}')
+        print(f'send: {response}')
+        await self.sent_to_clients(response)
 
 
 server = Server()

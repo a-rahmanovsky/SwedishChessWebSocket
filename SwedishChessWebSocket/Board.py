@@ -284,7 +284,7 @@ class Game:
                 
             if temp_fig == 'l' and end_y in [0, 7] and (not nextBoard.l_moved[tempD[curr_col] + str(start_y)]) and end_x == endD[curr_col]:
                 nextBoard.l_moved[tempD[curr_col] + str(start_y)] = True
-            self.Boards[index].turn = tempD[curr_col
+            self.Boards[index].turn = tempD[curr_col]
             print('pawn_wire', curr_fig, end_x, endD[curr_col])
             if curr_fig == 'p' and end_x == endD[curr_col]:
                 return '+'

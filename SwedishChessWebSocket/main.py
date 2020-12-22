@@ -142,6 +142,8 @@ class Server:
         end = m_js['to']['h'] + str(m_js['to']['v'])
         index = self.slots.index(login)
         num_board = 0 if index == 0 or index == 2 else 1
+        color = 'b' if index == 1 or index == 2 else 'w'
+        result = self.game.replace_pawn(num_board, end, m_js['piece'], color)
         turn = 'white'
         if self.game.get_color(num_board) == 'b':
             turn = 'black'
@@ -154,6 +156,7 @@ class Server:
                                })
         print(f'recw: {m_js}')
         print(f'send: {response}')
+        print(f'result: {result}')
         await self.sent_to_clients(response)
 
 

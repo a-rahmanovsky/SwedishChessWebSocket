@@ -233,6 +233,7 @@ class Board:
         self.r_moved[color] = True
         tempD = {'w': 'b', 'b': 'w'}
         self.turn = tempD[color]
+        self.display()
         return '.'
 
 
@@ -307,6 +308,7 @@ class Game:
         if currBoard[x][y].color == '.' and (figure != 'p' or x not in [0, 7]):
             nextBoard = Board()
             nextBoard.field = [[currBoard[i][j] for j in range(8)] for i in range(8)]
+            nextBoard.r_moved, nextBoard.l_moved = currBoard.r_moved, currBoard.l_moved
             nextBoard[x][y] = Cell(figure, color)
             if nextBoard.check(color):
                 del nextBoard

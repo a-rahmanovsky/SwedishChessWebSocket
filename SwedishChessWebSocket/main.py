@@ -107,14 +107,14 @@ class Server:
                 await self.sent_by_login(login_send, json.dumps({'type': 'add_piece', 'piece': figure}))
             if figure == '+':
                 await self.sent_by_login(login, json.dumps({'type': 'pawn_wire'}))
-            if figure not in '!?':
+            if figure not in '+!?':
                 m_js['login'] = login
                 m_js['turn'] = 'white'
                 if self.game.get_color(num_board) == 'b':
                     m_js['turn'] = 'black'
                 print(f'before send {self.game.get_color(num_board)}')
                 await self.sent_to_clients(json.dumps(m_js))
-            else:
+            elif figure in '?!':
                 await self.sent_by_login(login, json.dumps({'type': 'invalid_step'}))
 
     async def new_piece(self, m_js, login):

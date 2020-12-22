@@ -270,7 +270,7 @@ class Game:
                 print('in curr_fig')
                 print(nextBoard.l_moved)
                 nextBoard.l_moved[curr_col + str(start_y)] = True
-
+            print('after if', currBoard.l_moved, nextBoard.l_moved)
             if nextBoard.check(curr_col):
                 del nextBoard
                 return '?'

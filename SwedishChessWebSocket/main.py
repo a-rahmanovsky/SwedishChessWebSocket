@@ -82,6 +82,7 @@ class Server:
         begin = m_js['from']['h'] + str(m_js['from']['v'])
         end = m_js['to']['h'] + str(m_js['to']['v'])
         num_board = 0 if index == 0 or index == 2 else 1
+        color = 'b' if index == 1 or index == 2 else 'w'
         castling = is_castling(begin, end)
         if castling:
             res = self.game.castling(num_board, castling[0], castling[1])
@@ -118,6 +119,9 @@ class Server:
                 await self.sent_to_clients(json.dumps(m_js))
             elif figure in '?!':
                 await self.sent_by_login(login, json.dumps({'type': 'invalid_step'}))
+
+        if self.game.checkmate(num_board, color):
+            await self.sent_to_clients(json.dumps({}))
 
     async def new_piece(self, m_js, login):
         position = m_js['position']

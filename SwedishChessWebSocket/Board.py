@@ -367,3 +367,6 @@ class Game:
 
     def castling(self, index, color, direction):
         return self.Boards[index].castling(color, direction)
+
+    def checkmate(self, index, color):
+        return self.Boards[index].checkmate(color)
